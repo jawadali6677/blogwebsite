@@ -1,4 +1,5 @@
 @extends('layout.app')
+
 @section('content')
 
 <section class="container">
