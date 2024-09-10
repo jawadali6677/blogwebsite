@@ -11,3 +11,4 @@ Route::get('/', function () {
 });
 
 Route::get('/show/post/{id}' , [App\Http\Controllers\PostController::class , 'showPost'])->name('show_post');
+Route::post('/add/comment/' , [App\Http\Controllers\CommentController::class , 'addComment'])->name('add_comment');

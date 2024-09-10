@@ -133,7 +133,7 @@
                         <div class="card text-center mb-5">
                             <div class="card-header p-0">
                                 <div class="blog-media">
-                                    <img src="assets/imgs/blog-5.jpg" alt="" class="w-100">
+                                    <img src="{{ asset('assets/imgs/blog-5.jpg')}}" alt="" class="w-100">
                                     <a href="#" class="badge badge-primary">#lorem</a>
                                 </div>
                             </div>

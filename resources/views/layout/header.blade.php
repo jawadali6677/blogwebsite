@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Start your development with JoeBLog landing page.">
     <meta name="author" content="Devcrud">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Blog</title>
     <!-- font icons -->
     <link rel="stylesheet" href="{{ asset('assets/vendors/themify-icons/css/themify-icons.css')}}">
     <!-- Bootstrap + JoeBLog main styles -->
 	<link rel="stylesheet" href="{{ asset('assets/css/joeblog.css') }}">
 
-
+    
     <!-- core  -->
     <script src="{{ asset('assets/vendors/jquery/jquery-3.4.1.js') }}"></script>
     <script src="{{ asset('assets/vendors/bootstrap/bootstrap.bundle.js') }}"></script>
@@ -25,7 +26,7 @@
     <nav class="navbar navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="assets/imgs/logo.svg" alt="">
+                <img src="{{ asset('assets/imgs/logo.svg') }}" alt="">
             </a>
             <div class="socials">
                 <a href="javascript:void(0)"><i class="ti-facebook"></i></a>
