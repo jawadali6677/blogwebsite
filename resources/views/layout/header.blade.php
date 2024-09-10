@@ -72,11 +72,16 @@
                         </div>
                     </li> --}}
                 </ul>
-                {{-- <div class="navbar-nav ml-auto">
+                <div class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a href="components.html" class="ml-4 btn btn-dark mt-1 btn-sm">Components</a>
+                        @auth
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button class="ml-4 btn btn-dark mt-1 btn-sm">Logout</button>
+                        </form>
+                        @endauth
                     </li>
-                </div> --}}
+                </div>
             </div>
         </div>
     </nav>

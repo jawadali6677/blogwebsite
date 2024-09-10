@@ -70,6 +70,14 @@
                             </div>
                         </div>
 
+                        
+                        @guest 
+                        <div class="mt-4">
+                            <a href="{{ route('login') }}" style="color:#22b08f">Login to post comment</a>
+                        </div>
+                        @endguest
+
+                        @auth
                         <h6 class="mt-5 mb-3 text-center"><a href="#" class="text-dark">Write Your Comment</a></h6>
                         <hr>
                         <form action="{{ url('add/comment') }}" method="post">
@@ -79,7 +87,7 @@
                                     <textarea name="description" id="" cols="30" rows="10" class="form-control"
                                         placeholder="Enter Your Comment Here"></textarea>
                                 </div>
-                                <div class="col-sm-4 form-group">
+                                {{-- <div class="col-sm-4 form-group">
                                     <input type="text" class="form-control" name="name" value="">
                                 </div>
                                 <div class="col-sm-4 form-group">
@@ -87,12 +95,13 @@
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <input type="url" class="form-control" name="website" placeholder="Website">
-                                </div>
+                                </div> --}}
                                 <div class="form-group col-12">
                                     <button class="btn btn-primary btn-block btnSubmit">Post Comment</button>
                                 </div>
                             </div>
                         </form>
+                        @endauth
                     </div>
                 </div>
 
