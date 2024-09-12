@@ -19,6 +19,9 @@
 
     <!-- JoeBLog js -->
     <script src="{{ asset('assets/js/joeblog.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @livewireStyles
+    @livewireScripts
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
     
@@ -79,7 +82,10 @@
                             @csrf
                             <button class="ml-4 btn btn-dark mt-1 btn-sm">Logout</button>
                         </form>
+                        @else
+                        <a href="{{route('login')}}" class="ml-4 btn btn-dark mt-1 btn-sm">Login</a>
                         @endauth
+
                     </li>
                 </div>
             </div>
