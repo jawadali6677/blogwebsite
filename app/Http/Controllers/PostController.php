@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+
+    public function home()
+    {
+        $featured_posts = Post::where(['is_featured' => true, 'published' => true])->get();
+        $latest_posts = Post::where(['published' => true])->orderBy('id' , 'DESC')->with(['comments'])->take(7)->get();
+        return view('home' , compact('featured_posts' , 'latest_posts'));
+    }
     public function showPost(Request $request , $id)
     {
         $post = Post::where('id' , $id)->with(['category' , 'author' , 'comments'])->first();

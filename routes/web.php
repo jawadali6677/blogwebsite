@@ -14,11 +14,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/', function () {
-    $featured_posts = Post::all();
-    return view('home' , compact('featured_posts'));
-})->name('home');
-
+Route::get('/' , [App\Http\Controllers\PostController::class , 'home'])->name('home');
 Route::get('/show/post/{id}' , [App\Http\Controllers\PostController::class , 'showPost'])->name('show_post');
 Route::post('/add/comment/' , [App\Http\Controllers\CommentController::class , 'addComment'])->name('add_comment')->middleware('auth');
 Route::get('/category/posts/{id}' , [App\Http\Controllers\PostController::class , 'categoryPosts'])->name('category_posts');

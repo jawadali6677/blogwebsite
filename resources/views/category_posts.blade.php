@@ -8,8 +8,10 @@
                     <div class="card-header pt-0">
                         <h3 class="card-title mb-4">{{ $post->title }}</h3>
                         <div class="blog-media mb-4">
-                            <img src="{{ Storage::url($post->thumbnail) }}" alt="" class="w-100">
-                            <a href="#" class="badge badge-primary">#Salupt</a>
+                            <a href="{{ route('show_post' , ['id' => $post->id])}}">
+                                <img src="{{ Storage::url($post->thumbnail) }}" alt="" class="w-100">
+                                <a href="#" class="badge badge-primary">#Salupt</a>
+                            </a>
                         </div>
                         <small class="small text-muted">
                             <a href="#" class="text-muted">{{ $post->author->name }}</a>

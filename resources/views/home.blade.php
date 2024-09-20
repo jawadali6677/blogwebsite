@@ -31,186 +31,71 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-header text-center">
-                        <h5 class="card-title">Voluptates Corporis Placeat</h5>
-                        <small class="small text-muted">January 24 2019
+                        <h5 class="card-title">{{ $latest_posts[0]->title }}</h5>
+                        <small class="small text-muted">{{ $latest_posts[0]->created_at->format('d M,Y') }}
                             <span class="px-2">-</span>
-                            <a href="#" class="text-muted">32 Comments</a>
+                            <a href="#" class="text-muted">{{ $latest_posts[0]->comments->count() }}</a>
                         </small>
                     </div>
                     <div class="card-body">
                         <div class="blog-media">
-                            <img src="assets/imgs/blog-6.jpg" alt="" class="w-100">
+                            <img src="{{ Storage::url($latest_posts[0]->thumbnail) }}" alt="" class="w-100">
                             <a href="#" class="badge badge-primary">#Salupt</a>
                         </div>
-                        <p class="my-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos saepe dolores et
-                            nostrum porro odit reprehenderit animi, est ratione fugit aspernatur ipsum. Nostrum placeat hic
-                            saepe voluptatum dicta ipsum beatae.</p>
+                        @php
+                            $words = explode(' ', $latest_posts[0]->content);
+                            $limited_content = implode(' ', array_slice($words, 0, 50));
+                        @endphp
+                        <p class="my-3">{{ $limited_content }}...</p>
                     </div>
 
                     <div class="card-footer d-flex justify-content-between align-items-center flex-basis-0">
                         <button class="btn btn-primary circle-35 mr-4"><i class="ti-back-right"></i></button>
-                        <a href="single-post.html" class="btn btn-outline-dark btn-sm">READ MORE</a>
-                        <a href="#" class="text-dark small text-muted">By : Joe Mitchell</a>
+                        <a href="{{ route('show_post', ['id' => $latest_posts[0]->id]) }}" class="btn btn-outline-dark btn-sm">READ MORE</a>
+                        <a href="#" class="text-dark small text-muted">By : {{ $latest_posts[0]->author->name }}</a>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card text-center mb-5">
-                            <div class="card-header p-0">
-                                <div class="blog-media">
-                                    <img src="assets/imgs/blog-2.jpg" alt="" class="w-100">
-                                    <a href="#" class="badge badge-primary">#Placeat</a>
+                    @foreach($latest_posts as $post)
+                    @if($loop->iteration == 1)
+                    @php continue; @endphp
+                    @endif
+                        <div class="col-lg-6">
+                            <div class="card text-center mb-5">
+                                <div class="card-header p-0">
+                                    <div class="blog-media">
+                                        <img src="{{ Storage::url( $post->thumbnail) }}" alt="" class="w-100">
+                                        <a href="#" class="badge badge-primary">#Placeat</a>
+                                    </div>
+                                </div>
+                                <div class="card-body px-0">
+                                    <h5 class="card-title mb-2">{{ $post->title }}</h5>
+                                    <small class="small text-muted">{{ $post->created_at->format('d M,Y') }}
+                                        <span class="px-2">-</span>
+                                        <a href="#" class="text-muted">{{ $post->comments->count() }}</a>
+                                    </small>
+                                    @php
+                                    $words = explode(' ', $post->content);
+                                    $limited_content = implode(' ', array_slice($words, 0, 50));
+                                    @endphp
+                                    <p class="my-2">{{ $limited_content }}...</p>
+                                </div>
+
+                                <div class="card-footer p-0 text-center">
+                                    <a href="{{ route('show_post', ['id' => $post->id]) }}" class="btn btn-outline-dark btn-sm">READ MORE</a>
                                 </div>
                             </div>
-                            <div class="card-body px-0">
-                                <h5 class="card-title mb-2">Voluptates Corporis Placeat</h5>
-                                <small class="small text-muted">January 20 2019
-                                    <span class="px-2">-</span>
-                                    <a href="#" class="text-muted">34 Comments</a>
-                                </small>
-                                <p class="my-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos saepe
-                                    dolores et nostrum porro odit reprehenderit animi, est ratione fugit aspernatur ipsum.
-                                    Nostrum placeat hic saepe voluptatum dicta ipsum beatae.</p>
-                            </div>
-
-                            <div class="card-footer p-0 text-center">
-                                <a href="single-post.html" class="btn btn-outline-dark btn-sm">READ MORE</a>
-                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card text-center mb-5">
-                            <div class="card-header p-0">
-                                <div class="blog-media">
-                                    <img src="assets/imgs/blog-3.jpg" alt="" class="w-100">
-                                    <a href="#" class="badge badge-primary">#dolores</a>
-                                </div>
-                            </div>
-                            <div class="card-body px-0">
-                                <h5 class="card-title mb-2">Dolorum Dolores Itaque</h5>
-                                <small class="small text-muted">January 19 2019
-                                    <span class="px-2">-</span>
-                                    <a href="#" class="text-muted">64 Comments</a>
-                                </small>
-                                <p class="my-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos saepe
-                                    dolores et nostrum porro odit reprehenderit animi, est ratione fugit aspernatur ipsum.
-                                    Nostrum placeat hic saepe voluptatum dicta ipsum beatae.</p>
-                            </div>
-
-                            <div class="card-footer p-0 text-center">
-                                <a href="single-post.html" class="btn btn-outline-dark btn-sm">READ MORE</a>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card text-center mb-5">
-                            <div class="card-header p-0">
-                                <div class="blog-media">
-                                    <img src="assets/imgs/blog-4.jpg" alt="" class="w-100">
-                                    <a href="#" class="badge badge-primary">#amet</a>
-                                </div>
-                            </div>
-                            <div class="card-body px-0">
-                                <h5 class="card-title mb-2">Quisquam Dignissimos</h5>
-                                <small class="small text-muted">January 17 2019
-                                    <span class="px-2">-</span>
-                                    <a href="#" class="text-muted">93 Comments</a>
-                                </small>
-                                <p class="my-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos saepe
-                                    dolores et nostrum porro odit reprehenderit animi, est ratione fugit aspernatur ipsum.
-                                    Nostrum placeat hic saepe voluptatum dicta ipsum beatae.</p>
-                            </div>
-
-                            <div class="card-footer p-0 text-center">
-                                <a href="single-post.html" class="btn btn-outline-dark btn-sm">READ MORE</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card text-center mb-5">
-                            <div class="card-header p-0">
-                                <div class="blog-media">
-                                    <img src="{{ asset('assets/imgs/blog-5.jpg')}}" alt="" class="w-100">
-                                    <a href="#" class="badge badge-primary">#lorem</a>
-                                </div>
-                            </div>
-                            <div class="card-body px-0">
-                                <h5 class="card-title mb-2">Voluptas Optio Soluta</h5>
-                                <small class="small text-muted">January 15 2019
-                                    <span class="px-2">-</span>
-                                    <a href="#" class="text-muted">112 Comments</a>
-                                </small>
-                                <p class="my-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos saepe
-                                    dolores et nostrum porro odit reprehenderit animi, est ratione fugit aspernatur ipsum.
-                                    Nostrum placeat hic saepe voluptatum dicta ipsum beatae.</p>
-                            </div>
-
-                            <div class="card-footer p-0 text-center">
-                                <a href="single-post.html" class="btn btn-outline-dark btn-sm">READ MORE</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card text-center mb-5">
-                            <div class="card-header p-0">
-                                <div class="blog-media">
-                                    <img src="assets/imgs/blog-1.jpg" alt="" class="w-100">
-                                    <a href="#" class="badge badge-primary">#lipsum</a>
-                                </div>
-                            </div>
-                            <div class="card-body px-0">
-                                <h5 class="card-title mb-2">Voluptates Corporis Placeat</h5>
-                                <small class="small text-muted">January 14 2019
-                                    <span class="px-2">-</span>
-                                    <a href="#" class="text-muted">120 Comments</a>
-                                </small>
-                                <p class="my-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos saepe
-                                    dolores et nostrum porro odit reprehenderit animi, est ratione fugit aspernatur ipsum.
-                                    Nostrum placeat hic saepe voluptatum dicta ipsum beatae.</p>
-                            </div>
-
-                            <div class="card-footer p-0 text-center">
-                                <a href="single-post.html" class="btn btn-outline-dark btn-sm">READ MORE</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card text-center mb-5">
-                            <div class="card-header p-0">
-                                <div class="blog-media">
-                                    <img src="assets/imgs/blog-7.jpg" alt="" class="w-100">
-                                    <a href="#" class="badge badge-primary">#Elit</a>
-                                </div>
-                            </div>
-                            <div class="card-body px-0">
-                                <h5 class="card-title mb-2">Praesentium Asperiores</h5>
-                                <small class="small text-muted">January 10 2019
-                                    <span class="px-2">-</span>
-                                    <a href="#" class="text-muted">143 Comments</a>
-                                </small>
-                                <p class="my-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos saepe
-                                    dolores et nostrum porro odit reprehenderit animi, est ratione fugit aspernatur ipsum.
-                                    Nostrum placeat hic saepe voluptatum dicta ipsum beatae.</p>
-                            </div>
-
-                            <div class="card-footer p-0 text-center">
-                                <a href="single-post.html" class="btn btn-outline-dark btn-sm">READ MORE</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn btn-primary btn-block my-4">Load More Posts</button>
+                {{-- <button class="btn btn-primary btn-block my-4">Load More Posts</button> --}}
             </div>
 
             <!-- Sidebar -->
             <div class="page-sidebar text-center">
                 <h6 class="sidebar-title section-title mb-4 mt-3">About</h6>
-                <img src="assets/imgs/avatar.jpg" alt="" class="circle-100 mb-3">
+                <img src="{{ Storage::url( auth()->user()->image ) }}" alt="" class="circle-100 mb-3">
                 <div class="socials mb-3 mt-2">
                     <a href="javascript:void(0)"><i class="ti-facebook"></i></a>
                     <a href="javascript:void(0)"><i class="ti-twitter"></i></a>

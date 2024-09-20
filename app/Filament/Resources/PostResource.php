@@ -62,8 +62,11 @@ class PostResource extends Resource
                     Section::make('Meta')->schema([
     
                         TagsInput::make('tags'),
-                        Checkbox::make('published'),
-                        TextInput::make('post_by')->default(fn() => Filament::auth()->user()->id)->required(),
+                        Section::make('checkbox')->schema([
+                            Checkbox::make('published'),
+                            Checkbox::make('is_featured')->label('Is Featured'),
+                        ])->columnSpan(2),
+                        TextInput::make('post_by')->label('Auther ID')->default(fn() => Filament::auth()->user()->id)->required(),
                     ]),
                 ]),
 
