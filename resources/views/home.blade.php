@@ -34,7 +34,7 @@
                         <h5 class="card-title">{{ $latest_posts[0]->title }}</h5>
                         <small class="small text-muted">{{ $latest_posts[0]->created_at->format('d M,Y') }}
                             <span class="px-2">-</span>
-                            <a href="#" class="text-muted">{{ $latest_posts[0]->comments->count() }}</a>
+                            <a href="#" class="text-muted">{{ $latest_posts[0]->comments->count() }} comments</a>
                         </small>
                     </div>
                     <div class="card-body">
@@ -73,7 +73,7 @@
                                     <h5 class="card-title mb-2">{{ $post->title }}</h5>
                                     <small class="small text-muted">{{ $post->created_at->format('d M,Y') }}
                                         <span class="px-2">-</span>
-                                        <a href="#" class="text-muted">{{ $post->comments->count() }}</a>
+                                        <a href="#" class="text-muted">{{ $post->comments->count() }} comments</a>
                                     </small>
                                     @php
                                     $words = explode(' ', $post->content);
