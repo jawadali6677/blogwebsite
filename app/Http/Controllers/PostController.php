@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -10,7 +11,7 @@ class PostController extends Controller
 
     public function home()
     {
-        $featured_posts = Post::where(['is_featured' => true, 'published' => true])->get();
+        $featured_posts = Post::where(['is_featured' => true, 'published' => true])->take(2)->get();
         $latest_posts = Post::where(['published' => true])->orderBy('id' , 'DESC')->with(['comments'])->take(7)->get();
         return view('home' , compact('featured_posts' , 'latest_posts'));
     }
@@ -27,5 +28,12 @@ class PostController extends Controller
         $posts = Post::where('category_id' , $category_id)->orderBy('id' , 'DESC')->get();
 
         return view('category_posts', compact('posts'));
+    }
+   
+    public function featuredPosts()
+    {
+        $posts = Post::where(['is_featured' => true, 'published' => true])->orderBy('id' , 'DESC')->get();
+
+        return view('featured_posts', compact('posts'));
     }
 }

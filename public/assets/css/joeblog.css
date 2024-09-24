@@ -11472,7 +11472,8 @@ textarea.form-control {
 }
 
 .thumb-sm {
-  width: 55px;
+  width: 40px;
+  height:40px;
 }
 
 .thumb-md {
@@ -11779,4 +11780,10 @@ section .section-secondary-title {
   font-size: 17px;
   opacity: .7;
   margin-bottom: 15px;
+}
+
+.replay_to{
+  background-color: #b1dbff;
+  border-radius: 2px;
+  padding: 0 5px 0 5px;
 }

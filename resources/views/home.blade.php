@@ -3,7 +3,7 @@
     <div class="container">
         <section>
             <div class="feature-posts">
-                <a href="single-post.html" class="feature-post-item">
+                <a href="{{ route('featured_posts') }}" class="feature-post-item">
                     <span>Featured Posts</span>
                 </a>
                 @foreach ($featured_posts as $post)
@@ -44,7 +44,7 @@
                         </div>
                         @php
                             $words = explode(' ', $latest_posts[0]->content);
-                            $limited_content = implode(' ', array_slice($words, 0, 50));
+                            $limited_content = implode(' ', array_slice($words, 0, 30));
                         @endphp
                         <p class="my-3">{{ $limited_content }}...</p>
                     </div>
@@ -77,7 +77,7 @@
                                     </small>
                                     @php
                                     $words = explode(' ', $post->content);
-                                    $limited_content = implode(' ', array_slice($words, 0, 50));
+                                    $limited_content = implode(' ', array_slice($words, 0, 30));
                                     @endphp
                                     <p class="my-2">{{ $limited_content }}...</p>
                                 </div>
@@ -95,7 +95,7 @@
             <!-- Sidebar -->
             <div class="page-sidebar text-center">
                 <h6 class="sidebar-title section-title mb-4 mt-3">About</h6>
-                <img src="{{ Storage::url( auth()->user()->image ) }}" alt="" class="circle-100 mb-3">
+                <img src="{{ auth()->user()?Storage::url( auth()->user()->image ):Storage::url('image/admin.jpeg') }}" alt="Profile" class="circle-100 mb-3">
                 <div class="socials mb-3 mt-2">
                     <a href="javascript:void(0)"><i class="ti-facebook"></i></a>
                     <a href="javascript:void(0)"><i class="ti-twitter"></i></a>

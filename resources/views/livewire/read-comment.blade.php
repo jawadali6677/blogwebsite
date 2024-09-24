@@ -48,7 +48,7 @@
         @csrf
         <div class="form-row">
             <div class="col-12 form-group">
-                <textarea wire:model="description" id="" cols="30" rows="10" class="form-control"
+                <textarea wire:model="description" id="commentbox" cols="30" rows="10" class="form-control"
                     placeholder="Enter Your Comment Here"></textarea>
                     @error('description')
                         <font color="red">{{ $message }}</font>
@@ -82,11 +82,16 @@
         Swal.fire(msg , text , type , 'top-end');
     });
 
-    $('.replay').click(function(e){
+    $(document).on('click', '.replay', function(e) {
         e.preventDefault();
         var parent_id = $(this).data('id');
-        console.log('parent_id' , parent_id);
-        @this.set('parent_id', parent_id);
+        console.log('parent_id', parent_id);
+        @this.set('parent_id', parent_id);  // Make sure Livewire JS is properly included
+        $("#commentbox").focus();
+    });
+
+    $("#commentbox").focus(function(){
+
     })
 </script>
 @endsection
