@@ -1,4 +1,142 @@
 @extends('layout.app')
+
+<style>
+    .img-sm {
+        width: 46px;
+        height: 46px;
+    }
+
+    .panel {
+        box-shadow: 0 2px 0 rgba(0, 0, 0, 0.075);
+        border-radius: 0;
+        border: 0;
+        margin-bottom: 15px;
+    }
+
+    .panel .panel-footer,
+    .panel>:last-child {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .panel .panel-heading,
+    .panel>:first-child {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .panel-body {
+        padding: 25px 0px;
+    }
+
+    .comments-panel {
+        height: 400px;
+        overflow: auto;
+    }
+
+    .media-block .media-left {
+        display: block;
+        float: left
+    }
+
+    .media-block .media-right {
+        float: right
+    }
+
+    .media-block .media-body {
+        display: block;
+        overflow: hidden;
+        width: auto
+    }
+
+    .middle .media-left,
+    .middle .media-right,
+    .middle .media-body {
+        vertical-align: middle
+    }
+
+    .thumbnail {
+        border-radius: 0;
+        border-color: #e9e9e9
+    }
+
+    .tag.tag-sm,
+    .btn-group-sm>.tag {
+        padding: 5px 10px;
+    }
+
+    .tag:not(.label) {
+        background-color: #fff;
+        padding: 6px 12px;
+        border-radius: 2px;
+        border: 1px solid #cdd6e1;
+        font-size: 12px;
+        line-height: 1.42857;
+        vertical-align: middle;
+        -webkit-transition: all .15s;
+        transition: all .15s;
+    }
+
+    .text-muted,
+    a.text-muted:hover,
+    a.text-muted:focus {
+        color: #acacac;
+    }
+
+    .text-sm {
+        font-size: 0.9em;
+    }
+
+    .text-5x,
+    .text-4x,
+    .text-5x,
+    .text-2x,
+    .text-lg,
+    .text-sm,
+    .text-xs {
+        line-height: 1.25;
+    }
+
+    .btn-trans {
+        background-color: transparent;
+        border-color: transparent;
+        color: #929292;
+    }
+
+    .btn-icon {
+        padding-left: 9px;
+        padding-right: 9px;
+    }
+
+    .btn-sm,
+    .btn-group-sm>.btn,
+    .btn-icon.btn-sm {
+        padding: 5px 10px !important;
+    }
+
+    .mar-top {
+        margin-top: 15px;
+    }
+
+    .comments-panel::-webkit-scrollbar {
+        width: 12px;
+        /* width of the entire scrollbar */
+    }
+
+    .comments-panel::-webkit-scrollbar-track {
+        background: rgb(253, 253, 253);
+        /* color of the tracking area */
+    }
+
+    .comments-panel::-webkit-scrollbar-thumb {
+        background-color: #c2f6ea;
+        /* color of the scroll thumb */
+        border-radius: 20px;
+        /* roundness of the scroll thumb */
+        border: 3px solid rgb(255, 255, 255);
+        /* creates padding around scroll thumb */
+    }
+</style>
 @section('content')
     <section class="container">
         <div class="page-container">

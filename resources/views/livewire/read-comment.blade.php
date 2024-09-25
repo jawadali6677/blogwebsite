@@ -1,16 +1,50 @@
-
 <div class="card-footer" id="comments">
     <h6 class="mt-5 mb-3 text-center"><a href="#" class="text-dark">Comments {{ $comments->count() }}</a></h6>
     <hr>
     <div class="main">
-    @foreach($comments as $comment)
-        @if(!$comment->parent)
-            <!-- Top-level comment -->
-            
-                @include('partials.comment', ['comment' => $comment])
-            
-        @endif
-    @endforeach
+        <div class="container bootdey">
+            <div class="col-md-12 bootstrap snippets">
+                <div class="panel">
+                    @guest
+                        <div class="mt-4">
+                            <a href="{{ route('login') }}" style="color:#22b08f">Login to post comment</a>
+                        </div>
+                    @endguest
+                    @auth
+                        <form wire:submit.prevent="submit">
+                            <div class="panel-body">
+                                @csrf <!-- Optional, as Livewire handles CSRF automatically -->
+                                <textarea wire:model="description" id="commentbox" class="form-control" placeholder="What are you thinking?"></textarea>
+
+                                @error('description')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+
+                                <input type="hidden" wire:model="post_id" value="{{ $post->id }}">
+                                <input type="hidden" wire:model="parent_id" value="">
+
+                                <div class="mar-top clearfix">
+                                    <button type="submit"
+                                        class="btn btn-sm btn-primary pull-right btnSubmit">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    @endauth
+                </div>
+
+                <div class="panel">
+                    <div class="panel-body comments-panel">
+                        @foreach ($comments as $comment)
+                            @if (!$comment->parent)
+                                <!-- Top-level comment -->
+
+                                @include('partials.comment', ['comment' => $comment])
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
     
     {{-- <div class="media mt-5">
@@ -34,42 +68,6 @@
         </div>
     </div> --}}
 
-    
-    @guest 
-    <div class="mt-4">
-        <a href="{{ route('login') }}" style="color:#22b08f">Login to post comment</a>
-    </div>
-    @endguest
-
-    @auth
-    <h6 class="mt-5 mb-3 text-center"><a href="#" class="text-dark">Write Your Comment</a></h6>
-    <hr>
-    <form wire:submit.prevent="submit">
-        @csrf
-        <div class="form-row">
-            <div class="col-12 form-group">
-                <textarea wire:model="description" id="commentbox" cols="30" rows="10" class="form-control"
-                    placeholder="Enter Your Comment Here"></textarea>
-                    @error('description')
-                        <font color="red">{{ $message }}</font>
-                    @enderror
-            </div>
-            <div class="col-sm-4 form-group">
-                <input type="text" class="form-control" id="post_id" hidden wire:model="post_id" value="{{$post->id}}">
-                <input type="text" class="form-control" id="parent_id" hidden wire:model="parent_id" value="">
-            </div>
-            {{-- <div class="col-sm-4 form-group">
-                <input type="email" class="form-control" name="email" placeholder="Email">
-            </div>
-            <div class="col-sm-4 form-group">
-                <input type="url" class="form-control" name="website" placeholder="Website">
-            </div> --}}
-            <div class="form-group col-12">
-                <button class="btn btn-primary btn-block btnSubmit">Post Comment</button>
-            </div>
-        </div>
-    </form>
-    @endauth
 </div>
 
 @section('script')
