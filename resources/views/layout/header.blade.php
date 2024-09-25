@@ -20,6 +20,7 @@
     <!-- JoeBLog js -->
     <script src="{{ asset('assets/js/joeblog.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     @livewireStyles
     @livewireScripts
 </head>

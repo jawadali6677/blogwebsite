@@ -16,7 +16,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/' , [App\Http\Controllers\PostController::class , 'home'])->name('home');
 Route::get('/show/post/{id}' , [App\Http\Controllers\PostController::class , 'showPost'])->name('show_post');
-Route::post('/add/comment/' , [App\Http\Controllers\CommentController::class , 'addComment'])->name('add_comment')->middleware('auth');
+// Route::post('/add/comment/' , [App\Http\Controllers\CommentController::class , 'addComment'])->name('add_comment')->middleware('auth');
 Route::get('/category/posts/{id}' , [App\Http\Controllers\PostController::class , 'categoryPosts'])->name('category_posts');
 Route::get('/featured/posts' , [App\Http\Controllers\PostController::class , 'featuredPosts'])->name('featured_posts');
 require __DIR__.'/auth.php';

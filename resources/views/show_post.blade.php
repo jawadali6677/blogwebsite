@@ -41,7 +41,7 @@
                                 <h6 class="card-title mb-2"><a href="#" class="text-dark">{{ $r_post->name }}</a></h6>
                                 <small class="small text-muted">{{ $r_post->created_at->format('M-Y-d') }}
                                     <span class="px-2">-</span>
-                                    <a href="#" class="text-muted">34 Comments</a>
+                                    <a href="#" class="text-muted">{{$r_post->comments->count()}} Comments</a>
                                 </small>
                             </div>
                         </div>
