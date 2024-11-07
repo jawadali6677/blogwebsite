@@ -136,8 +136,22 @@
         border: 3px solid rgb(255, 255, 255);
         /* creates padding around scroll thumb */
     }
+
+    .black {
+        color: black;
+    }
+
+    .facebook_blue {
+        color: #316FF6;
+    }
 </style>
 @section('content')
+    @php
+        $thumb_color = 'black';
+        if ($post->like) {
+            $thumb_color = 'facebook_blue';
+        }
+    @endphp
     <section class="container">
         <div class="page-container">
             <div class="page-content">
@@ -149,6 +163,10 @@
                             <a href="#" class="badge badge-primary">#Salupt</a>
                         </div>
                         <small class="small text-muted">
+                            <a href="javascript:void(0)"  data-user="{{auth()->user()->id}}" data-id="{{$post->id}}" class="likePost">
+                                <i style="font-size:22px;"class="mr-2 fa fa-thumbs-up {{ $thumb_color }}"
+                                    aria-hidden="true"></i>
+                            </a>
                             <a href="#" class="text-muted">{{ $post->author->name }}</a>
                             <span class="px-2">·</span>
                             <span>{{ $post->created_at->format('M-Y-d') }}</span>
@@ -166,24 +184,25 @@
                 <h6 class="mt-5 text-center">Related Posts</h6>
                 <hr>
                 <div class="row">
-                    @foreach($related_posts as $r_post)
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card mb-5">
-                            <div class="card-header p-0">
-                                <div class="blog-media">
-                                    <img src="{{ Storage::url($r_post->thumbnail) }}" alt="" class="w-100">
-                                    <a href="#" class="badge badge-primary">{{ $r_post->category->name }}</a>
+                    @foreach ($related_posts as $r_post)
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card mb-5">
+                                <div class="card-header p-0">
+                                    <div class="blog-media">
+                                        <img src="{{ Storage::url($r_post->thumbnail) }}" alt="" class="w-100">
+                                        <a href="#" class="badge badge-primary">{{ $r_post->category->name }}</a>
+                                    </div>
+                                </div>
+                                <div class="card-body px-0">
+                                    <h6 class="card-title mb-2"><a href="#" class="text-dark">{{ $r_post->name }}</a>
+                                    </h6>
+                                    <small class="small text-muted">{{ $r_post->created_at->format('M-Y-d') }}
+                                        <span class="px-2">-</span>
+                                        <a href="#" class="text-muted">{{ $r_post->comments->count() }} Comments</a>
+                                    </small>
                                 </div>
                             </div>
-                            <div class="card-body px-0">
-                                <h6 class="card-title mb-2"><a href="#" class="text-dark">{{ $r_post->name }}</a></h6>
-                                <small class="small text-muted">{{ $r_post->created_at->format('M-Y-d') }}
-                                    <span class="px-2">-</span>
-                                    <a href="#" class="text-muted">{{$r_post->comments->count()}} Comments</a>
-                                </small>
-                            </div>
                         </div>
-                    </div>
                     @endforeach
                     {{-- <div class="col-md-6 col-lg-4">
                         <div class="card mb-5">
@@ -225,8 +244,8 @@
             <!-- Sidebar -->
             <div class="page-sidebar">
                 <h6 class=" ">tags</h6>
-                @foreach($post->tags as $tag)
-                <a href="javascript:void(0)" class="badge badge-primary m-1">#{{ $tag }}</a>
+                @foreach ($post->tags as $tag)
+                    <a href="javascript:void(0)" class="badge badge-primary m-1">#{{ $tag }}</a>
                 @endforeach
 
                 <div class="ad-card d-flex text-center align-items-center justify-content-center mt-4">
@@ -238,28 +257,29 @@
 @endsection
 
 @section('script')
-<script>
-    $(".btnSubmit").click(function(e){
-        e.preventDefault();
+    <script>
+        $(".btnSubmit").click(function(e) {
+            e.preventDefault();
 
-        var form = $(this).closest('form');
-        var formData = form.serialize();
-        var url = form.attr('action');
+            var form = $(this).closest('form');
+            var formData = form.serialize();
+            var url = form.attr('action');
 
-        console.log('form', form);
-        console.log('url', url);
-        
-        $.ajax({
-        url: '{{ url('add/comment/') }}',
-        method: 'POST',
-        data: formData,
-        success: function(response) {
-            console.log(response);
-        },
-        error: function(xhr) {
-            console.log(xhr.responseText);
-        }
-    });
-    })
-</script>
+            console.log('form', form);
+            console.log('url', url);
+
+            $.ajax({
+                url: '{{ url('add/comment/') }}',
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        })
+
+    </script>
 @endsection

@@ -21,12 +21,21 @@
 </div> --}}
 
 <style>
-.hide{
-    display: none;
-}
-.show{
-    display: block;
-}
+    .hide {
+        display: none;
+    }
+
+    .show {
+        display: block;
+    }
+
+    .black {
+        color: black;
+    }
+
+    .facebook_blue {
+        color: #316FF6;
+    }
 </style>
 
 <!-- Newsfeed Content -->
@@ -45,29 +54,114 @@
         <p>{{ $comment->description }}</p>
         <div class="pad-ver">
             <div class="btn-group">
-                <a class="btn btn-sm btn-default btn-hover-success" href="#">
-                    <i style="font-size:24px" class="fa">&#xf087;</i></a>
+                @php
+                    $thumb_color = 'black';
+                    if ($comment->like) {
+                        $thumb_color = 'facebook_blue';
+                    }
+                @endphp
+                <a class="btn btn-sm btn-default btn-hover-success like" data-user="{{ auth()->user()->id }}"
+                    data-id="{{ $comment->id }}" href="javascript:void(0)">
+                    <i style="font-size:24px;" class="fa fa-thumbs-up like_icon {{ $thumb_color }}"
+                        aria-hidden="true"></i></a>
             </div>
             <a href="javascript:void(0)" data-id="{{ $comment->id }}"
                 class="btn btn-sm btn-default btn-hover-primary replay">Replay</a>
-                @if ($comment->childern->count() > 0)
-                <a href="javascript:void(0)"
-                    class="btn btn-sm btn-default btn-hover-primary show_replay">View Replays</a>
-                @endif
+            @if ($comment->childern->count() > 0)
+                <a href="javascript:void(0)" class="btn btn-sm btn-default btn-hover-primary show_replay">View
+                    Replays</a>
+            @endif
         </div>
         <hr>
 
         <!-- Comments -->
 
         @if ($comment->childern->count() > 0)
-        
-        <div class="hide">
-            @foreach ($comment->childern as $child)
-                @include('partials.comment', ['comment' => $child])
-            @endforeach
-        </div>
+
+            <div class="hide">
+                @foreach ($comment->childern as $child)
+                    @include('partials.comment', ['comment' => $child])
+                @endforeach
+            </div>
         @endif
     </div>
 </div>
 <!--===================================================-->
 <!-- End Newsfeed Content -->
+
+<script>
+    $(document).off('click', '.show_replay').on('click', '.show_replay', function() {
+        var obj = $(this).closest('.pad-ver').nextAll('div.hide, div.show').first();
+
+        if (obj.hasClass('hide')) {
+            $(this).text('Hide')
+            obj.removeClass('hide').addClass('show');
+        } else {
+            $(this).text('View Replays')
+            obj.removeClass('show').addClass('hide');
+        }
+    });
+
+    $(document).off('click', '.like').on('click', '.like', function() {
+        const comment_id = $(this).data('id');
+        const like_by = $(this).data('user');
+        const csrf = $('meta[name="csrf-token"]').attr('content');
+        const $icon = $(this).find('i');
+        $.ajax({
+            url: "{{ route('like_comment') }}",
+            method: "POST",
+            data: {
+                comment_id: comment_id,
+                _token: csrf,
+                like_by: like_by
+            },
+            success: function(response) {
+                console.log(response);
+
+                if (response.status == "liked") {
+                    $icon.removeClass('black').addClass("facebook_blue");
+                }
+                if (response.status == "deleted") {
+                    $icon.removeClass('facebook_blue').addClass("black");
+                }
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        });
+    })
+
+
+    $(document).off('click', '.likePost').on('click', '.likePost', function(e) {
+        e.preventDefault();
+        const post_id = $(this).data('id');
+        const like_by = $(this).data('user');
+        const csrf = $('meta[name="csrf-token"]').attr('content');
+        const $icon = $(this).find('i');
+        console.log("clicked");
+
+        $.ajax({
+            url: "{{ route('like_post') }}",
+            method: "POST",
+            data: {
+                post_id: post_id,
+                _token: csrf,
+                like_by: like_by
+            },
+            success: function(response) {
+                console.log(response);
+
+                if (response.status == "liked") {
+                    console.log($icon);
+                    $icon.removeClass('black').addClass("facebook_blue");
+                }
+                if (response.status == "deleted") {
+                    $icon.removeClass('facebook_blue').addClass("black");
+                }
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        });
+    })
+</script>
