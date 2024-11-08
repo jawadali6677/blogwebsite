@@ -146,12 +146,6 @@
     }
 </style>
 @section('content')
-    @php
-        $thumb_color = 'black';
-        if ($post->like) {
-            $thumb_color = 'facebook_blue';
-        }
-    @endphp
     <section class="container">
         <div class="page-container">
             <div class="page-content">
@@ -163,10 +157,18 @@
                             <a href="#" class="badge badge-primary">#Salupt</a>
                         </div>
                         <small class="small text-muted">
+                            @auth
+                            @php
+                                $thumb_color = 'black';
+                                if ($post->like) {
+                                    $thumb_color = 'facebook_blue';
+                                }
+                            @endphp
                             <a href="javascript:void(0)"  data-user="{{auth()->user()->id}}" data-id="{{$post->id}}" class="likePost">
                                 <i style="font-size:22px;"class="mr-2 fa fa-thumbs-up {{ $thumb_color }}"
                                     aria-hidden="true"></i>
                             </a>
+                            @endauth
                             <a href="#" class="text-muted">{{ $post->author->name }}</a>
                             <span class="px-2">·</span>
                             <span>{{ $post->created_at->format('M-Y-d') }}</span>

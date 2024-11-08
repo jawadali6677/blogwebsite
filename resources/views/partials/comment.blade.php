@@ -54,6 +54,7 @@
         <p>{{ $comment->description }}</p>
         <div class="pad-ver">
             <div class="btn-group">
+                @auth
                 @php
                     $thumb_color = 'black';
                     if ($comment->like) {
@@ -64,6 +65,7 @@
                     data-id="{{ $comment->id }}" href="javascript:void(0)">
                     <i style="font-size:24px;" class="fa fa-thumbs-up like_icon {{ $thumb_color }}"
                         aria-hidden="true"></i></a>
+                @endauth
             </div>
             <a href="javascript:void(0)" data-id="{{ $comment->id }}"
                 class="btn btn-sm btn-default btn-hover-primary replay">Replay</a>

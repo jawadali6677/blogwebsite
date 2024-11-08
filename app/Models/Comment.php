@@ -34,7 +34,9 @@ class Comment extends Model
 
     public function like()
     {
-        return $this->hasOne(CommentLike::class , "comment_id" , "id")->where('like_by', Auth::user()->id);
+        return $this->hasOne(CommentLike::class , "comment_id" , "id")->when(auth()->check(), function($query){
+            $query->where("like_by" , Auth::user()->id);
+        });
     }
 
     public function likes()

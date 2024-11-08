@@ -33,7 +33,9 @@ class Post extends Model
 
     public function like()
     {
-        return $this->hasOne(PostLike::class, "post_id" , "id")->where("like_by" , Auth::user()->id);
+        return $this->hasOne(PostLike::class, "post_id" , "id")->when(auth()->check(), function($query){
+            $query->where("like_by" , Auth::user()->id);
+        });
     }
 
     public function likes()
