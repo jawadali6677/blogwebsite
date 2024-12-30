@@ -29,21 +29,22 @@
         <hr>
         <div class="page-container">
             <div class="page-content">
+                @if(isset($latest_posts[0]))
                 <div class="card">
                     <div class="card-header text-center">
-                        <h5 class="card-title">{{ $latest_posts[0]->title }}</h5>
-                        <small class="small text-muted">{{ $latest_posts[0]->created_at->format('d M,Y') }}
+                        <h5 class="card-title">{{ isset($latest_posts[0])?$latest_posts[0]->title : ''; }}</h5>
+                        <small class="small text-muted">{{ isset($latest_posts[0])?$latest_posts[0]->created_at->format('d M,Y'): '' }}
                             <span class="px-2">-</span>
-                            <a href="#" class="text-muted">{{ $latest_posts[0]->comments->count() }} comments</a>
+                            <a href="#" class="text-muted">{{ isset($latest_posts[0])?$latest_posts[0]->comments->count(): 0 }} comments</a>
                         </small>
                     </div>
                     <div class="card-body">
                         <div class="blog-media">
-                            <img src="{{ Storage::url($latest_posts[0]->thumbnail) }}" alt="" class="w-100">
+                            <img src="{{ Storage::url(isset($latest_posts[0])?$latest_posts[0]->thumbnail:'') }}" alt="" class="w-100">
                             <a href="#" class="badge badge-primary">#Salupt</a>
                         </div>
                         @php
-                            $words = explode(' ', $latest_posts[0]->content);
+                            $words = explode(' ', isset($latest_posts[0])?$latest_posts[0]->content:'');
                             $limited_content = implode(' ', array_slice($words, 0, 30));
                         @endphp
                         <p class="my-3">{{ $limited_content }}...</p>
@@ -51,10 +52,11 @@
 
                     <div class="card-footer d-flex justify-content-between align-items-center flex-basis-0">
                         <button class="btn btn-primary circle-35 mr-4"><i class="ti-back-right"></i></button>
-                        <a href="{{ route('show_post', ['id' => $latest_posts[0]->id]) }}" class="btn btn-outline-dark btn-sm">READ MORE</a>
-                        <a href="#" class="text-dark small text-muted">By : {{ $latest_posts[0]->author->name }}</a>
+                        <a href="{{ route('show_post', ['id' => isset($latest_posts[0])?$latest_posts[0]->id:0]) }}" class="btn btn-outline-dark btn-sm">READ MORE</a>
+                        <a href="#" class="text-dark small text-muted">By : {{ isset($latest_posts[0])?$latest_posts[0]->author->name:''; }}</a>
                     </div>
                 </div>
+                @endif
                 <hr>
                 <div class="row">
                     @foreach($latest_posts as $post)
