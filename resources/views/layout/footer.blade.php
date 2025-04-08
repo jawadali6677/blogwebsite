@@ -1,6 +1,6 @@
 
     
-<div class="instagram-wrapper mt-5">
+<!-- <div class="instagram-wrapper mt-5">
     <div class="ig-id">
         <a href="javascript:void(0)">Follow @joe_mitchell On Instagram</a>
     </div>
@@ -70,7 +70,7 @@
             </span>
         </div>
     </a>
-</div>
+</div> -->
     <!-- Page Footer -->
     <footer class="page-footer">
         <div class="container">

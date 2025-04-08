@@ -129,7 +129,7 @@
                 <a href="javascript:void(0)" class="badge badge-primary m-1">#incidunt</a>
                 <a href="javascript:void(0)" class="badge badge-primary m-1">#possimus</a>
 
-                <h6 class="sidebar-title mt-5 mb-4">Instagram</h6>
+                <!-- <h6 class="sidebar-title mt-5 mb-4">Instagram</h6>
                 <div class="row px-3">
                     <div class="col-4 p-1 figure">
                         <a href="#" class="figure-img">
@@ -213,7 +213,7 @@
                         <p class="mb-2"> deserunt ard quisqua...</p>
                         <p class="text-muted small"><i class="ti-calendar pr-1"></i> January 04 2019</p>
                     </div>
-                </div>
+                </div> -->
                 <div class="ad-card d-flex text-center align-items-center justify-content-center">
                     <span href="#" class="font-weight-bold">ADS</span>
                 </div>
