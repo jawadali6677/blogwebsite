@@ -9,9 +9,8 @@ use Illuminate\Support\Facades\Route;
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+    Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile_update');
 });
 
 Route::get('/' , [App\Http\Controllers\PostController::class , 'home'])->name('home');

@@ -83,6 +83,7 @@
                             @csrf
                             <button class="ml-4 btn btn-dark mt-1 btn-sm">Logout</button>
                         </form>
+                        <a href="{{ route('profile')}}" class="ml-4 btn btn-light mt-1 btn-sm">Profile</a>
                         @else
                         <a href="{{route('login')}}" class="ml-4 btn btn-dark mt-1 btn-sm">Login</a>
                         @endauth
