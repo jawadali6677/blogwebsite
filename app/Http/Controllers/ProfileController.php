@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -24,17 +26,47 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request)
     {
-        $request->user()->fill($request->validated());
+        DB::beginTransaction();
+        try {
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+            $imageName = null;
+            $image_path = auth()->user()->image;
+            $request->validate([
+                'image' => 'nullable|image|mimes:jpeg,jpg,png,gif',
+                "name"=>"required",
+                "email"=>"required",
+            ]);
+
+            if($request->hasFile('image')){
+
+                $uploadDir = 'images/';
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+                $imageName = time().'.'.$request->image->extension();
+                $request->image->move(public_path('images'), $imageName);
+                $image_path = $uploadDir.$imageName;
+            }
+
+            User::where('id' , auth()->user()->id)->update([
+                "name"=>$request->name,
+                "email"=>$request->email,
+                "phone"=>$request->phone,
+                "country"=>$request->country,
+                "date_of_birth"=>$request->date_of_birth,
+                "gender"=>$request->gender,
+                "image" => $image_path,
+            ]);
+
+            DB::commit();
+            return response()->json(['success' => true , "image" => asset($image_path), 'message' => "Record added successfully."]);
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json(['success' => false , 'message' => $th->getMessage()] , 500);
         }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**

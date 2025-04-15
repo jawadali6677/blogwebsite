@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
-    Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile_update');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile_update');
 });
 
 Route::get('/' , [App\Http\Controllers\PostController::class , 'home'])->name('home');
