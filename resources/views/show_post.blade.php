@@ -159,15 +159,12 @@
                         <small class="small text-muted">
                             @auth
                             @php
-                                $thumb_color = 'black';
+                                $like_img = asset('images/like.png');
                                 if ($post->like) {
-                                    $thumb_color = 'facebook_blue';
+                                $like_img = asset('images/liked.png');
                                 }
                             @endphp
-                            <a href="javascript:void(0)"  data-user="{{auth()->user()->id}}" data-id="{{$post->id}}" class="likePost">
-                                <i style="font-size:22px;"class="mr-2 fa fa-thumbs-up {{ $thumb_color }}"
-                                    aria-hidden="true"></i>
-                            </a>
+                                <img src="{{ $like_img }}" width="30px" data-user="{{auth()->user()->id}}" data-id="{{$post->id}}" class="likePost mr-2" alt="">
                             @endauth
                             <a href="#" class="text-muted">{{ $post->author->name }}</a>
                             <span class="px-2">·</span>

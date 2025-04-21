@@ -15,6 +15,7 @@ class PostLikeController extends Controller
             $exists = PostLike::where(['post_id' => $request->post_id, "like_by" => $request->like_by])->first();
             if($exists){
                 $exists->delete();
+                DB::commit();
                 return response()->json(['success' => false , "status" => "deleted",  "message" => "You unlike this successfully."],200);
             }
             PostLike::create([

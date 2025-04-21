@@ -18,7 +18,7 @@
             @endforeach
         @endif
     </div>
-</div> --}}
+</div>  --}}
 
 <style>
     .hide {
@@ -42,7 +42,7 @@
 <!--===================================================-->
 <div class="media-block">
     <a class="media-left mr-2" href="#"><img class="img-circle img-sm" alt="Profile Picture"
-            src="{{ Storage::url('image/admin.jpeg') ? Storage::url($comment->commentBy->image) : Storage::url('image/admin.jpeg') }}"></a>
+            src="{{ asset($comment->commentBy->image) }}"></a>
     <div class="media-body">
         <div class="mar-btm">
             <a href="#"
@@ -56,15 +56,12 @@
             <div class="btn-group">
                 @auth
                 @php
-                    $thumb_color = 'black';
+                    $like_img = asset('images/like.png');
                     if ($comment->like) {
-                        $thumb_color = 'facebook_blue';
+                    $like_img = asset('images/liked.png');
                     }
                 @endphp
-                <a class="btn btn-sm btn-default btn-hover-success like" data-user="{{ auth()->user()->id }}"
-                    data-id="{{ $comment->id }}" href="javascript:void(0)">
-                    <i style="font-size:24px;" class="fa fa-thumbs-up like_icon {{ $thumb_color }}"
-                        aria-hidden="true"></i></a>
+                <img src="{{ $like_img }}" id="like_img" width="34px" class="like" data-id="{{ $comment->id }}" data-user="{{ auth()->user()->id }}" alt="">
                 @endauth
             </div>
             <a href="javascript:void(0)" data-id="{{ $comment->id }}"
@@ -108,7 +105,7 @@
         const comment_id = $(this).data('id');
         const like_by = $(this).data('user');
         const csrf = $('meta[name="csrf-token"]').attr('content');
-        const $icon = $(this).find('i');
+        const img = $(this);
         $.ajax({
             url: "{{ route('like_comment') }}",
             method: "POST",
@@ -121,10 +118,10 @@
                 console.log(response);
 
                 if (response.status == "liked") {
-                    $icon.removeClass('black').addClass("facebook_blue");
+                    img.attr("src","{{asset('images/liked.png')}}")
                 }
                 if (response.status == "deleted") {
-                    $icon.removeClass('facebook_blue').addClass("black");
+                    img.attr("src","{{asset('images/like.png')}}")
                 }
             },
             error: function(error) {
@@ -139,8 +136,7 @@
         const post_id = $(this).data('id');
         const like_by = $(this).data('user');
         const csrf = $('meta[name="csrf-token"]').attr('content');
-        const $icon = $(this).find('i');
-        console.log("clicked");
+        const img = $(this);
 
         $.ajax({
             url: "{{ route('like_post') }}",
@@ -154,11 +150,13 @@
                 console.log(response);
 
                 if (response.status == "liked") {
-                    console.log($icon);
-                    $icon.removeClass('black').addClass("facebook_blue");
+                    console.log(img);
+                    const likeImagePath = "{{ asset('images/liked.png') }}";
+                    img.attr("src", likeImagePath);
                 }
                 if (response.status == "deleted") {
-                    $icon.removeClass('facebook_blue').addClass("black");
+                    const likeImagePath = "{{ asset('images/like.png') }}";
+                    img.attr("src", likeImagePath);
                 }
             },
             error: function(error) {
